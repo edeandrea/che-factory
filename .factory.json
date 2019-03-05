@@ -1,0 +1,88 @@
+{
+	"v": "4.0",
+	"creator": {
+		"name": "Eric Deandrea",
+		"email": "edeandrea@redhat.com"
+	},
+	"workspace": {
+		"workspaceConfig": {
+	    "defaultEnv": "default",
+	    "environments": {
+	      "default": {
+	        "machines": {
+	          "dev-machine": {
+	            "installers": [
+	              "org.eclipse.che.exec",
+	              "org.eclipse.che.terminal",
+	              "org.eclipse.che.ws-agent"
+	            ],
+	            "volumes": {},
+	            "env": {
+	              "CHE_MACHINE_NAME": "dev-machine"
+	            },
+	            "servers": {
+	              "tomcat8-debug": {
+	                "attributes": {},
+	                "protocol": "http",
+	                "port": "8000"
+	              },
+	              "codeserver": {
+	                "attributes": {},
+	                "protocol": "http",
+	                "port": "9876"
+	              },
+	              "tomcat8": {
+	                "attributes": {},
+	                "protocol": "http",
+	                "port": "8080"
+	              }
+	            },
+	            "attributes": {
+	              "memoryLimitBytes": 2147483648
+	            }
+	          }
+	        },
+	        "recipe": {
+	          "type": "dockerimage",
+	          "content": "eclipse/ubuntu_jdk8"
+	        }
+	      }
+	    },
+	    "commands": [
+	      {
+	        "commandLine": "mvn clean install -f ${current.project.path}",
+	        "name": "build",
+	        "type": "mvn",
+	        "attributes": {
+	          "goal": "Build",
+	          "previewUrl": ""
+	        }
+	      },
+	      {
+	        "commandLine": "mvn clean install -f ${current.project.path} && cp ${current.project.path}/target/*.war $TOMCAT_HOME/webapps/ROOT.war",
+	        "name": "deploy",
+	        "type": "mvn",
+	        "attributes": {
+	          "goal": "Deploy",
+	          "previewUrl": "${server.tomcat8}"
+	        }
+	      },
+	      {
+	        "commandLine": "$TOMCAT_HOME/bin/startup.sh",
+	        "name": "startTomcat",
+	        "type": "custom",
+	        "attributes": {}
+	      },
+	      {
+	        "commandLine": "$TOMCAT_HOME/bin/shutdown.sh",
+	        "name": "stopTomcat",
+	        "type": "custom",
+	        "attributes": {}
+	      }
+	    ],
+	    "projects": [],
+	    "name": "wksp-36qj",
+	    "links": []
+	  }
+	}
+}
