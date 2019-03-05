@@ -98,5 +98,17 @@
     "links":[
 
     ]
+  },
+  "ide": {
+  	"onProjectsLoaded": {
+  		"actions": [
+  			{
+  				"id": "runCommand",
+  				"properties": {
+  					"name": "startTomcat"
+  				}
+  			}
+  		]
+  	}
   }
 }
