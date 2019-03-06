@@ -6,6 +6,7 @@
   },
   "workspace":{
     "defaultEnv":"default",
+    "name":"transitioning-applications-rh-summit-2019",
     "environments":{
       "default":{
         "machines":{
@@ -15,31 +16,19 @@
               "org.eclipse.che.terminal",
               "org.eclipse.che.ws-agent"
             ],
-            "volumes":{
-
-            },
             "env":{
               "CHE_MACHINE_NAME":"dev-machine"
             },
             "servers":{
               "tomcat8-debug":{
-                "attributes":{
-
-                },
                 "protocol":"http",
                 "port":"8000"
               },
               "codeserver":{
-                "attributes":{
-
-                },
                 "protocol":"http",
                 "port":"9876"
               },
               "tomcat8":{
-                "attributes":{
-
-                },
                 "protocol":"http",
                 "port":"8080"
               }
@@ -77,26 +66,31 @@
       {
         "commandLine":"$TOMCAT_HOME/bin/startup.sh",
         "name":"startTomcat",
-        "type":"custom",
-        "attributes":{
-
-        }
+        "type":"custom"
       },
       {
         "commandLine":"$TOMCAT_HOME/bin/shutdown.sh",
         "name":"stopTomcat",
-        "type":"custom",
-        "attributes":{
-
-        }
+        "type":"custom"
       }
     ],
     "projects":[
-
-    ],
-    "name":"java-with-tomcat",
-    "links":[
-
+      {
+        "name": "transitioning-applications",
+        "type": "blank",
+        "source": {
+          "location": "https://gitlab.com/edeandrea/transitioning-existing-applications-to-containers-its-easier-than-you-think.git",
+          "type": "git"
+        },
+        "path": "/transitioning-applications",
+        "description": "Transitioning applications lab content"
+      },
+      {
+        "name": "SampleWebApp",
+        "type": "maven",
+        "path": "/transitioning-applications/projects/SampleWebApp",
+        "description": "Simple Web application that needs to be deployed to some Java container"
+    	}
     ]
   },
   "ide": {
